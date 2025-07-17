@@ -26,24 +26,36 @@ export default function Home() {
     });
   }, []);
 
-  const filteredPosts = posts.filter(post =>
-    post.title?.rendered?.toLowerCase().includes(search.toLowerCase())
-  );
+  const filteredPosts = posts.filter(post => {
+    const title = post.title?.rendered?.toLowerCase() || "";
+    const searchWords = search.toLowerCase().split(/\s+/).filter(Boolean);
+    return searchWords.every(word => title.includes(word));
+  });
 
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
       <div className="flex flex-col items-center mt-10 px-4">
-        <form className="w-full max-w-lg mb-8">
+        <form className="w-full max-w-lg mb-8 relative">
           <input
             type="text"
             placeholder="Cerca tra gli articoli..."
             value={search}
             onChange={e => setSearch(e.target.value)}
-            className="w-full rounded-lg border border-gray-300 px-4 py-3 text-lg focus:outline-none focus:ring-2 focus:ring-cyan-400 shadow"
+            className="w-full rounded-lg border border-gray-300 px-4 py-3 text-lg focus:outline-none focus:ring-2 focus:ring-cyan-400 shadow text-black placeholder-gray-500 pr-10"
           />
+          {search && (
+            <button
+              type="button"
+              onClick={() => setSearch("")}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-cyan-600 text-xl focus:outline-none"
+              aria-label="Pulisci campo"
+            >
+              &#10005;
+            </button>
+          )}
         </form>
-        <div className="w-full max-w-6xl overflow-x-auto touch-pan-x" style={{ WebkitOverflowScrolling: 'touch' }}>
+        <div className="w-full max-w-6xl overflow-x-auto touch-pan-x px-2" style={{ WebkitOverflowScrolling: 'touch' }}>
           <div
             className="flex gap-8 whitespace-nowrap min-w-max"
             style={{ animation: 'scroll-x 30s linear infinite', animationPlayState: 'running' }}
@@ -78,11 +90,7 @@ export default function Home() {
             0% { transform: translateX(0); }
             100% { transform: translateX(-50%); }
           }
-          @media (max-width: 768px) {
-            .min-w-max {
-              animation: none !important;
-            }
-          }
+          /* Rimosso disabilitazione animazione su mobile per permettere lo scroll automatico e swipe */
         `}</style>
       </div>
     </div>

@@ -22,11 +22,6 @@ export default function Header() {
           <span className="text-white text-2xl font-bold tracking-tight group-hover:underline">{siteTitle}</span>
         )}
       </Link>
-      <Link href="/" className="flex items-center group">
-        {siteTitle && (
-          <span className="text-white text-2xl font-bold tracking-tight group-hover:underline">{siteTitle}</span>
-        )}
-      </Link>
       <nav className="mt-4 sm:mt-0 flex gap-6">
         <Link href="/" className="text-white font-medium hover:underline">Home</Link>
         <Link href="/articoli" className="text-white font-medium hover:underline">Blog</Link>
