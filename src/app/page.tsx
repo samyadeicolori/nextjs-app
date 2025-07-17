@@ -27,10 +27,10 @@ export default function Home() {
   }, []);
 
   const filteredPosts = posts.filter(post => {
-    const queryWords = search.trim().toLowerCase().split(/\s+/);
+    const queryWords = search.trim().toLowerCase().split(/\s+/).filter(Boolean);
+    if (queryWords.length === 0) return true; // mostra tutti se la barra è vuota
     const text = `${post.title.rendered} ${post.excerpt?.rendered || ""}`.toLowerCase();
-    // Ogni parola della query deve essere presente come sottostringa nel testo
-    return queryWords.every(word => word && text.includes(word));
+    return queryWords.every(word => text.includes(word));
   });
 
   return (
