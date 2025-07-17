@@ -4,8 +4,17 @@ import Header from "../Header";
 import { useEffect, useState } from "react";
 import { getLatestPosts } from "../wordpress";
 
+type Post = {
+  id: number;
+  slug: string;
+  title: { rendered: string };
+  excerpt?: { rendered: string };
+  link?: string;
+  content?: { rendered: string };
+};
+
 export default function Articoli() {
-  const [posts, setPosts] = useState<any[]>([]);
+  const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

@@ -1,3 +1,9 @@
+export type Comment = {
+  id: number;
+  author_name: string;
+  content: { rendered: string };
+  date: string;
+};
 export async function postComment({ post, author_name, author_email, content }: { post: number, author_name: string, author_email: string, content: string }) {
   try {
     const response = await axios.post(

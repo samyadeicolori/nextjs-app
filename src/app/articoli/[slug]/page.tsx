@@ -3,16 +3,24 @@
 import Header from "../../Header";
 import { useEffect, useState } from "react";
 import { getPostBySlug } from "../../wordpress-post";
-import { getCommentsByPostId } from "../../wordpress-comments";
+import { getCommentsByPostId, Comment } from "../../wordpress-comments";
 import { useParams } from "next/navigation";
 
+type Post = {
+  id: number;
+  slug: string;
+  title: { rendered: string };
+  excerpt?: { rendered: string };
+  link?: string;
+  content?: { rendered: string };
+};
 
 export default function Articolo() {
   const params = useParams();
   const slug = Array.isArray(params?.slug) ? params.slug[0] : params?.slug;
-  const [post, setPost] = useState<any>(null);
+  const [post, setPost] = useState<Post | null>(null);
   const [loading, setLoading] = useState(true);
-  const [comments, setComments] = useState<any[]>([]);
+  const [comments, setComments] = useState<Comment[]>([]);
   const [commentsLoading, setCommentsLoading] = useState(false);
 
   useEffect(() => {
