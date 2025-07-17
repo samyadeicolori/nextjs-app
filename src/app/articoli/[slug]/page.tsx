@@ -44,7 +44,22 @@ export default function Articolo() {
       <Header />
       <div className="max-w-3xl mx-auto mt-10 px-4">
         {loading ? (
-          <p className="text-gray-500">Caricamento in corso...</p>
+          <div className="animate-pulse">
+            <div className="bg-white rounded-xl shadow p-8 mb-10">
+              <div className="h-8 w-2/3 bg-gray-200 rounded mb-6" />
+              <div className="h-6 w-full bg-gray-200 rounded mb-4" />
+              <div className="h-6 w-5/6 bg-gray-200 rounded mb-4" />
+              <div className="h-6 w-4/6 bg-gray-200 rounded" />
+            </div>
+            <div className="bg-white rounded-xl shadow p-8">
+              <div className="h-6 w-1/4 bg-gray-200 rounded mb-4" />
+              <div className="space-y-4">
+                <div className="h-6 w-full bg-gray-200 rounded" />
+                <div className="h-6 w-5/6 bg-gray-200 rounded" />
+                <div className="h-6 w-4/6 bg-gray-200 rounded" />
+              </div>
+            </div>
+          </div>
         ) : !post ? (
           <p className="text-gray-500">Articolo non trovato.</p>
         ) : (
@@ -56,7 +71,11 @@ export default function Articolo() {
             <section className="bg-white rounded-xl shadow p-8">
               <h2 className="text-2xl font-bold mb-4 text-cyan-700">Commenti</h2>
               {commentsLoading ? (
-                <p className="text-gray-500">Caricamento commenti...</p>
+                <div className="animate-pulse space-y-4">
+                  <div className="h-6 w-full bg-gray-200 rounded" />
+                  <div className="h-6 w-5/6 bg-gray-200 rounded" />
+                  <div className="h-6 w-4/6 bg-gray-200 rounded" />
+                </div>
               ) : comments.length === 0 ? (
                 <p className="text-gray-500">Nessun commento presente.</p>
               ) : (
