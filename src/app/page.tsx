@@ -43,12 +43,10 @@ export default function Home() {
             className="w-full rounded-lg border border-gray-300 px-4 py-3 text-lg focus:outline-none focus:ring-2 focus:ring-cyan-400 shadow"
           />
         </form>
-        <div className="w-full max-w-6xl overflow-hidden">
+        <div className="w-full max-w-6xl overflow-x-auto touch-pan-x" style={{ WebkitOverflowScrolling: 'touch' }}>
           <div
-            className="flex gap-8 whitespace-nowrap animate-scroll-x scroll-paused"
-            style={{ animation: 'scroll-x 30s linear infinite' }}
-            onMouseEnter={e => e.currentTarget.style.animationPlayState = 'paused'}
-            onMouseLeave={e => e.currentTarget.style.animationPlayState = 'running'}
+            className="flex gap-8 whitespace-nowrap"
+            style={{ minWidth: 'max-content' }}
           >
             {filteredPosts.length === 0 ? (
               <p className="text-gray-500">Nessun articolo trovato.</p>
