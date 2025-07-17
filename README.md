@@ -1,4 +1,20 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# nextjs-app
+
+Questo progetto è stato creato con Next.js, TypeScript, Tailwind CSS e ESLint.
+
+## Collegamento a WordPress
+
+Il progetto è pensato per essere collegato a un sito WordPress headless su [nextjs.samyadeicolori.it](https://nextjs.samyadeicolori.it) tramite REST API o GraphQL.
+
+## Script principali
+
+- `npm run dev` — Avvia il server di sviluppo
+- `npm run build` — Compila il progetto per la produzione
+- `npm run start` — Avvia il server in produzione
+
+## Personalizzazione
+
+Aggiungi le librerie necessarie per la connessione a WordPress (es. axios, graphql-request) a seconda delle tue esigenze.
 
 ## Getting Started
 

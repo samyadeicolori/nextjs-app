@@ -1,0 +1,71 @@
+"use client";
+
+import Header from "../../Header";
+import { useEffect, useState } from "react";
+import { getPostBySlug } from "../../wordpress-post";
+import { getCommentsByPostId } from "../../wordpress-comments";
+import { useParams } from "next/navigation";
+
+
+export default function Articolo() {
+  const params = useParams();
+  const slug = Array.isArray(params?.slug) ? params.slug[0] : params?.slug;
+  const [post, setPost] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+  const [comments, setComments] = useState<any[]>([]);
+  const [commentsLoading, setCommentsLoading] = useState(false);
+
+  useEffect(() => {
+    if (slug) {
+      getPostBySlug(slug).then((data) => {
+        setPost(data);
+        setLoading(false);
+        if (data?.id) {
+          setCommentsLoading(true);
+          getCommentsByPostId(data.id).then((comms) => {
+            setComments(comms);
+            setCommentsLoading(false);
+          });
+        }
+      });
+    }
+  }, [slug]);
+
+  return (
+    <div className="min-h-screen bg-gray-50">
+      <Header />
+      <div className="max-w-3xl mx-auto mt-10 px-4">
+        {loading ? (
+          <p className="text-gray-500">Caricamento in corso...</p>
+        ) : !post ? (
+          <p className="text-gray-500">Articolo non trovato.</p>
+        ) : (
+          <>
+            <article className="bg-white rounded-xl shadow p-8 mb-10">
+              <h1 className="text-3xl font-bold mb-6 text-cyan-700" dangerouslySetInnerHTML={{ __html: post.title?.rendered || post.title }} />
+              <div className="prose prose-lg max-w-none text-gray-900" style={{wordBreak: 'break-word'}} dangerouslySetInnerHTML={{ __html: post.content?.rendered || "" }} />
+            </article>
+            <section className="bg-white rounded-xl shadow p-8">
+              <h2 className="text-2xl font-bold mb-4 text-cyan-700">Commenti</h2>
+              {commentsLoading ? (
+                <p className="text-gray-500">Caricamento commenti...</p>
+              ) : comments.length === 0 ? (
+                <p className="text-gray-500">Nessun commento presente.</p>
+              ) : (
+                <ul className="space-y-6">
+                  {comments.map(comment => (
+                    <li key={comment.id} className="border-b pb-4">
+                      <div className="font-semibold text-cyan-800 mb-1">{comment.author_name}</div>
+                      <div className="text-gray-700 text-sm mb-1" dangerouslySetInnerHTML={{ __html: comment.content?.rendered || comment.content }} />
+                      <div className="text-xs text-gray-400">{new Date(comment.date).toLocaleString()}</div>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </section>
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
