@@ -27,12 +27,10 @@ export default function Home() {
   }, []);
 
   const filteredPosts = posts.filter(post => {
-    const title = post.title?.rendered?.toLowerCase() || "";
-    const searchWords = search.toLowerCase().split(/\s+/).filter(Boolean);
-    // Se la barra è vuota, mostra tutto
-    if (searchWords.length === 0) return true;
-    // Cerca ogni parola come sottostringa nel titolo
-    return searchWords.every(word => title.indexOf(word) !== -1);
+    const queryWords = search.trim().toLowerCase().split(/\s+/);
+    const text = `${post.title.rendered} ${post.excerpt?.rendered || ""}`.toLowerCase();
+    // Ogni parola della query deve essere presente come sottostringa nel testo
+    return queryWords.every(word => word && text.includes(word));
   });
 
   return (
