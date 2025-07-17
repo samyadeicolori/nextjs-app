@@ -45,8 +45,10 @@ export default function Home() {
         </form>
         <div className="w-full max-w-6xl overflow-x-auto touch-pan-x" style={{ WebkitOverflowScrolling: 'touch' }}>
           <div
-            className="flex gap-8 whitespace-nowrap"
-            style={{ minWidth: 'max-content' }}
+            className="flex gap-8 whitespace-nowrap min-w-max"
+            style={{ animation: 'scroll-x 30s linear infinite', animationPlayState: 'running' }}
+            onMouseEnter={e => e.currentTarget.style.animationPlayState = 'paused'}
+            onMouseLeave={e => e.currentTarget.style.animationPlayState = 'running'}
           >
             {filteredPosts.length === 0 ? (
               <p className="text-gray-500">Nessun articolo trovato.</p>
@@ -75,6 +77,11 @@ export default function Home() {
           @keyframes scroll-x {
             0% { transform: translateX(0); }
             100% { transform: translateX(-50%); }
+          }
+          @media (max-width: 768px) {
+            .min-w-max {
+              animation: none !important;
+            }
           }
         `}</style>
       </div>
