@@ -3,6 +3,7 @@
 import Header from "../Header";
 import { useEffect, useState } from "react";
 import { getLatestPosts } from "../wordpress";
+import Link from "next/link";
 
 type Post = {
   id: number;
@@ -34,14 +35,14 @@ export default function Articoli() {
         ) : posts.length === 0 ? (
           <p className="text-gray-500">Nessun articolo trovato.</p>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {posts.map(post => (
               <div key={post.id} className="bg-white rounded-xl shadow p-6 flex flex-col hover:shadow-lg transition-shadow">
                 <h2 className="text-xl font-bold mb-2 text-black" dangerouslySetInnerHTML={{ __html: post.title?.rendered || post.title }} />
                 {post.excerpt?.rendered && (
                   <div className="text-gray-700 text-base mb-4" dangerouslySetInnerHTML={{ __html: post.excerpt.rendered }} />
                 )}
-                <a href={`/articoli/${post.slug}`} className="mt-auto text-cyan-600 font-semibold hover:underline">Leggi tutto</a>
+                <Link href={`/articoli/${post.slug}`} className="mt-auto text-cyan-600 font-semibold hover:underline">Leggi tutto</Link>
               </div>
             ))}
           </div>
