@@ -43,21 +43,13 @@ export default function Articolo() {
     <div className="min-h-screen bg-gray-50">
       <Header />
       <div className="max-w-3xl mx-auto mt-10 px-4">
-        {loading ? (
+        {!post && loading ? (
           <div className="animate-pulse">
             <div className="bg-white rounded-xl shadow p-8 mb-10">
               <div className="h-8 w-2/3 bg-gray-200 rounded mb-6" />
               <div className="h-6 w-full bg-gray-200 rounded mb-4" />
               <div className="h-6 w-5/6 bg-gray-200 rounded mb-4" />
               <div className="h-6 w-4/6 bg-gray-200 rounded" />
-            </div>
-            <div className="bg-white rounded-xl shadow p-8">
-              <div className="h-6 w-1/4 bg-gray-200 rounded mb-4" />
-              <div className="space-y-4">
-                <div className="h-6 w-full bg-gray-200 rounded" />
-                <div className="h-6 w-5/6 bg-gray-200 rounded" />
-                <div className="h-6 w-4/6 bg-gray-200 rounded" />
-              </div>
             </div>
           </div>
         ) : !post ? (
@@ -66,7 +58,15 @@ export default function Articolo() {
           <>
             <article className="bg-white rounded-xl shadow p-8 mb-10">
               <h1 className="text-3xl font-bold mb-6 text-cyan-700" dangerouslySetInnerHTML={{ __html: post.title?.rendered || post.title }} />
-              <div className="prose prose-lg max-w-none text-gray-900" style={{wordBreak: 'break-word'}} dangerouslySetInnerHTML={{ __html: post.content?.rendered || "" }} />
+              {loading ? (
+                <div className="animate-pulse">
+                  <div className="h-6 w-full bg-gray-200 rounded mb-4" />
+                  <div className="h-6 w-5/6 bg-gray-200 rounded mb-4" />
+                  <div className="h-6 w-4/6 bg-gray-200 rounded" />
+                </div>
+              ) : (
+                <div className="prose prose-lg max-w-none text-gray-900" style={{wordBreak: 'break-word'}} dangerouslySetInnerHTML={{ __html: post.content?.rendered || "" }} />
+              )}
             </article>
             <section className="bg-white rounded-xl shadow p-8">
               <h2 className="text-2xl font-bold mb-4 text-cyan-700">Commenti</h2>
