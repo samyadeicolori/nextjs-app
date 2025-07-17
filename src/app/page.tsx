@@ -29,7 +29,10 @@ export default function Home() {
   const filteredPosts = posts.filter(post => {
     const title = post.title?.rendered?.toLowerCase() || "";
     const searchWords = search.toLowerCase().split(/\s+/).filter(Boolean);
-    return searchWords.every(word => title.includes(word));
+    // Se la barra è vuota, mostra tutto
+    if (searchWords.length === 0) return true;
+    // Cerca ogni parola come sottostringa nel titolo
+    return searchWords.every(word => title.indexOf(word) !== -1);
   });
 
   return (
