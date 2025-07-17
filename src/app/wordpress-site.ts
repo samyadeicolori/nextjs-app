@@ -16,10 +16,9 @@ export async function getSiteLogoUrl() {
   try {
     // Recupera le opzioni del tema per trovare il logo
     const res = await axios.get(`${WORDPRESS_API_URL}/wp/v2/settings`);
-    // Alcuni temi usano opzioni personalizzate, qui si può adattare
-    // In alternativa, si può usare ACF o plugin specifici
-    return res.data.site_logo || null;
-  } catch (error) {
+    const data = res.data as { site_logo?: string };
+    return data.site_logo || null;
+  } catch {
     return null;
   }
 }

@@ -2,7 +2,7 @@
 import Link from "next/link";
 
 import { useEffect, useState } from "react";
-import { getSiteInfo, getSiteLogoUrl } from "./wordpress-site";
+import { getSiteInfo } from "./wordpress-site";
 
 export default function Header() {
   const [siteTitle, setSiteTitle] = useState<string | null>(null);
@@ -17,11 +17,11 @@ export default function Header() {
 
   return (
     <header className="w-full bg-gradient-to-r from-blue-600 to-cyan-400 py-6 px-4 flex flex-col sm:flex-row items-center justify-between shadow-md">
-      <a href="/" className="flex items-center group">
+      <Link href="/" className="flex items-center group">
         {siteTitle && (
           <span className="text-white text-2xl font-bold tracking-tight group-hover:underline">{siteTitle}</span>
         )}
-      </a>
+      </Link>
       <Link href="/" className="flex items-center group">
         {siteTitle && (
           <span className="text-white text-2xl font-bold tracking-tight group-hover:underline">{siteTitle}</span>

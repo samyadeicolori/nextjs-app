@@ -4,6 +4,14 @@ export type Comment = {
   content: { rendered: string };
   date: string;
 };
+type AxiosError = {
+  isAxiosError: boolean;
+  response?: {
+    data?: {
+      message?: string;
+    };
+  };
+};
 export async function postComment({ post, author_name, author_email, content }: { post: number, author_name: string, author_email: string, content: string }) {
   try {
     const response = await axios.post(
@@ -16,12 +24,16 @@ export async function postComment({ post, author_name, author_email, content }: 
       }
     );
     return response.data;
-  } catch (error: any) {
-    if (error.response && error.response.data && error.response.data.message) {
+  } catch (error: unknown) {
+    if (isAxiosError(error) && error.response && error.response.data && error.response.data.message) {
       throw new Error(error.response.data.message);
     }
     throw new Error("Errore nell'invio del commento");
   }
+}
+
+function isAxiosError(error: unknown): error is AxiosError {
+  return typeof error === "object" && error !== null && "isAxiosError" in error;
 }
 import axios from "axios";
 
