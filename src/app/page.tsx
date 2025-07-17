@@ -3,11 +3,22 @@
 import Header from "./Header";
 import { useState, useEffect } from "react";
 import { getLatestPosts } from "./wordpress";
+import Link from "next/link";
 
+
+
+type Post = {
+  id: number;
+  slug: string;
+  title: { rendered: string };
+  excerpt?: { rendered: string };
+  link?: string;
+  content?: { rendered: string };
+};
 
 export default function Home() {
   const [search, setSearch] = useState("");
-  const [posts, setPosts] = useState<any[]>([]);
+  const [posts, setPosts] = useState<Post[]>([]);
 
   useEffect(() => {
     getLatestPosts().then((data) => {
@@ -56,7 +67,7 @@ export default function Home() {
                       dangerouslySetInnerHTML={{ __html: post.excerpt.rendered }}
                     />
                   )}
-                  <a href={`/articoli/${post.slug}`} className="mt-auto text-cyan-600 font-semibold hover:underline">Leggi tutto</a>
+                  <Link href={`/articoli/${post.slug}`} className="mt-auto text-cyan-600 font-semibold hover:underline">Leggi tutto</Link>
                 </div>
               ))
             )}

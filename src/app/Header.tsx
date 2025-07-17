@@ -1,3 +1,4 @@
+import Link from "next/link";
 "use client";
 
 import Image from "next/image";
@@ -27,8 +28,8 @@ export default function Header() {
         )}
       </a>
       <nav className="mt-4 sm:mt-0 flex gap-6">
-        <a href="/" className="text-white font-medium hover:underline">Home</a>
-        <a href="/articoli" className="text-white font-medium hover:underline">Blog</a>
+        <Link href="/" className="text-white font-medium hover:underline">Home</Link>
+        <Link href="/articoli" className="text-white font-medium hover:underline">Blog</Link>
         <a href="#" className="text-white font-medium hover:underline">Contatti</a>
       </nav>
     </header>
